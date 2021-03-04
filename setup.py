@@ -14,10 +14,10 @@ keywords = ['selenium','webdriver','headless','automation','testing','random','c
 
 setuptools.setup(
     name="webdriver_selector",
-    version="0.1",
+    version="0.2",
     author="Sean Bailey",
     author_email="seanbailey518@gmail.com",
-    description="webdriver_selector provides a quick and easy way to automatically get the first available webdriver on the system, preconfigured to be incognito and headless.",
+    description="webdriver_selector provides a quick and easy way to automatically get the first available webdriver on the system, preconfigured to be incognito and headless by default, with now the ability to choose headless state.",
     long_description=open('README.md').read(),
     long_description_content_type="text/markdown",
     url="https://www.github.com/sean-bailey/webdriver_selector",

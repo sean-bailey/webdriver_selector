@@ -8,6 +8,10 @@ If you are on a system and just want the first available webdriver preconfigured
 in this directory, run
 `pip install .`
 
+If you would like to install without downloading the zip, you can very simply do
+
+`pip install https://github.com/sean-bailey/webdriver_selector/archive/main.zip`
+
 **Useage**
 
 the `selector` class can be called with two arguments:
@@ -20,7 +24,7 @@ Attributes:
 `driver` -- the selenium webdriver data selected, defaults to `None`
 `availablefunctions` -- the list of tuples of available function names and their functions
 `finalfunctionstring` -- a human readable string of available functions to choose from
-
+`headless` -- Bool of either `True` or `False` which specifies if you'd like the browser to be headless or not, defaults to `True`
 
 Examples:
 

@@ -11,17 +11,18 @@ def functions():
 
 class selector:
 
-    def __init__(self,chosendriver="randomDriver",force=True):
+    def __init__(self,chosendriver="randomDriver",force=True,headless=True):
         self.chosendriver=chosendriver
         self.force=force
+        self.headless=headless
         availablefunctions=functions()
         driver=None
         for function in availablefunctions:
             if self.chosendriver == function[0]:
                 if self.chosendriver=="randomDriver":
-                    driver=function[1](self.force)
+                    driver=function[1](self.force,self.headless)
                 else:
-                    driver=function[1]()
+                    driver=function[1](self.headless)
         self.availablefunctions=availablefunctions
         self.driver=driver
         self.finalfunctionstring=""
