@@ -27,10 +27,9 @@ class selector:
         self.driver=driver
         self.finalfunctionstring=""
         if self.driver is None:
-            #finalfunctionstring=""
             for function in availablefunctions:
                 self.finalfunctionstring+=function[0]+", "
-            raise ValueError("Error, either you have no compatible browsers installed or did not use one of the available choices: "+finalfunctionstring)
+            raise ValueError("Error, either you have no compatible browsers installed or did not use one of the available choices: "+self.finalfunctionstring)
 
 
 
