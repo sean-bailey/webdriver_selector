@@ -11,12 +11,21 @@ warnings.filterwarnings('ignore')
 import os
 import time
 os.environ['WDM_LOG_LEVEL'] = '0'
+chromeinstaller=None
+chromiuminstaller=None
+edgeinstaller=None
+operainstaller=None
+firefoxinstaller=None
+availablefunctions=[]
+
 
 
 while True:
     try:
-        #print("Installing chromeinstaller...")
+
         chromeinstaller=ChromeDriverManager().install()
+        availablefunctions.append("chrome")
+        print("chromeinstaller installed")
         break
     except Exception as e:
         checkvalue=str(e)
@@ -25,11 +34,14 @@ while True:
 
         else:
             print("Cannot install chromedriver")
+            print(e)
         break
 
 while True:
     try:
         chromiuminstaller=ChromeDriverManager(chrome_type=ChromeType.CHROMIUM).install()
+        availablefunctions.append("chromium")
+        print("chromiuminstaller installed")
         break
     except Exception as e:
         checkvalue=str(e)
@@ -37,11 +49,14 @@ while True:
             print("You've exceeded the Github API Rate limit for running the installers for webdrivers. Please try again in an hour.")
         else:
             print("Cannot install chromium-driver")
+            print(e)
         break
 
 while True:
     try:
         edgeinstaller=EdgeChromiumDriverManager().install()
+        availablefunctions.append("edge")
+        print("edgeinstaller installed")
         break
     except Exception as e:
         checkvalue=str(e)
@@ -49,11 +64,15 @@ while True:
             print("You've exceeded the Github API Rate limit for running the installers for webdrivers. Please try again in an hour.")
         else:
             print("Cannot install edgedriver")
+            print(e)
         break
-
+"""
+#I am experiencing some issues with opera on ubuntu 20...
 while True:
     try:
         operainstaller=OperaDriverManager().install()
+        availablefunctions.append('opera')
+        print("operainstaller installed")
         break
     except Exception as e:
         checkvalue=str(e)
@@ -62,11 +81,14 @@ while True:
             print("You've exceeded the Github API Rate limit for running the installers for webdrivers. Please try again in an hour.")
         else:
             print("Cannot install operadriver")
+            print(e)
         break
-
+"""
 while True:
     try:
         firefoxinstaller=GeckoDriverManager().install()
+        availablefunctions.append("firefox")
+        print("firefoxinstaller installed")
         break
     except Exception as e:
         checkvalue=str(e)
@@ -74,6 +96,7 @@ while True:
             print("You've exceeded the Github API Rate limit for running the installers for webdrivers. Please try again in an hour.")
         else:
             print("Cannot install firefoxdriver")
+            print(e)
         break
 
 
@@ -156,7 +179,7 @@ def opera(headless=True):
         if driver:
             driver.quit()
             driver=None
-        print("failure in chromium function")
+        print("failure in opera function")
         print(e)
         return None
 
@@ -180,20 +203,19 @@ def firefox(headless=True):
         print(e)
         return None
 
+
+
+
+
+
 def randomDriver(force=True,headless=True):
-    #functionlist=["firefox","chrome","phantomJS","phantomJS":phantomJS]
     functions={"firefox":firefox,"chrome":chrome,"chromium":chromium,"opera":opera,"edge":edge}
+    functionlist=availablefunctions
+    random.shuffle(functionlist)
     driver=None
     if force:
-        checkdict = {}
-        for key in functions.keys():
-            checkdict[key]=0
         while driver is None:
-            if not any(x == 0 for x in checkdict.values()):
-                return None
-            funchoice=random.choice(list(functions.keys()))
-            checkdict[funchoice]+=1
-
+            funchoice=random.choice(functionlist)
             driver=functions[funchoice](headless)
         return driver
     else:
