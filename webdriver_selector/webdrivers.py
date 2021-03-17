@@ -11,87 +11,70 @@ warnings.filterwarnings('ignore')
 import os
 import time
 os.environ['WDM_LOG_LEVEL'] = '0'
-chromeattempt=False
-chromiumattempt=False
-edgeattempt=False
-operaattempt=False
-firefoxattempt=False
 
-while not chromeattempt:
+
+while True:
     try:
         #print("Installing chromeinstaller...")
         chromeinstaller=ChromeDriverManager().install()
-        chromeattempt=True
         break
     except Exception as e:
         checkvalue=str(e)
         if "API rate limit exceeded" in checkvalue:
-            time.sleep(3600)
-            print("You've exceeded the Github API Rate limit for running the installers for webdrivers. This program will sleep for an hour and try again.")
+            print("You've exceeded the Github API Rate limit for running the installers for webdrivers. Please try again in an hour.")
+
         else:
             print("Cannot install chromedriver")
-            chromeattempt=True
-            break
+        break
 
-while not chromiumattempt:
+while True:
     try:
         chromiuminstaller=ChromeDriverManager(chrome_type=ChromeType.CHROMIUM).install()
-        chromiumattempt=True
         break
     except Exception as e:
         checkvalue=str(e)
         if "API rate limit exceeded" in checkvalue:
-            time.sleep(3600)
-            print("You've exceeded the Github API Rate limit for running the installers for webdrivers. This program will sleep for an hour and try again.")
+            print("You've exceeded the Github API Rate limit for running the installers for webdrivers. Please try again in an hour.")
         else:
             print("Cannot install chromium-driver")
-            chromiumattempt=True
-            break
+        break
 
-while not edgeattempt:
+while True:
     try:
         edgeinstaller=EdgeChromiumDriverManager().install()
-        edgeattempt=True
         break
     except Exception as e:
         checkvalue=str(e)
         if "API rate limit exceeded" in checkvalue:
-            time.sleep(3600)
-            print("You've exceeded the Github API Rate limit for running the installers for webdrivers. This program will sleep for an hour and try again.")
+            print("You've exceeded the Github API Rate limit for running the installers for webdrivers. Please try again in an hour.")
         else:
             print("Cannot install edgedriver")
-            edgeattempt=True
-            break
+        break
 
-while not operaattempt:
+while True:
     try:
         operainstaller=OperaDriverManager().install()
-        operaattempt=True
         break
     except Exception as e:
         checkvalue=str(e)
         if "API rate limit exceeded" in checkvalue:
-            time.sleep(3600)
-            print("You've exceeded the Github API Rate limit for running the installers for webdrivers. This program will sleep for an hour and try again.")
+
+            print("You've exceeded the Github API Rate limit for running the installers for webdrivers. Please try again in an hour.")
         else:
             print("Cannot install operadriver")
-            operaattempt=True
-            break
+        break
 
-while not firefoxattempt:
+while True:
     try:
         firefoxinstaller=GeckoDriverManager().install()
-        firefoxattempt=True
         break
     except Exception as e:
         checkvalue=str(e)
         if "API rate limit exceeded" in checkvalue:
-            time.sleep(3600)
-            print("You've exceeded the Github API Rate limit for running the installers for webdrivers. This program will sleep for an hour and try again.")
+            print("You've exceeded the Github API Rate limit for running the installers for webdrivers. Please try again in an hour.")
         else:
             print("Cannot install firefoxdriver")
-            firefoxattempt=True
-            break
+        break
 
 
 def phantomJS(headless=True):
@@ -99,6 +82,9 @@ def phantomJS(headless=True):
         driver=webdriver.PhantomJS()
         return driver
     except Exception as e:
+        if driver:
+            driver.quit()
+            driver=None
         print("failure in phantomJS function")
         print(e)
         return None
@@ -114,6 +100,9 @@ def chrome(headless=True):
         driver = webdriver.Chrome(chromeinstaller,chrome_options=options)
         return driver
     except Exception as e:
+        if driver:
+            driver.quit()
+            driver=None
         print("failure in chrome function")
         print(e)
         return None
@@ -129,6 +118,9 @@ def chromium(headless=True):
         driver = webdriver.Chrome(chromiuminstaller,chrome_options=options)
         return driver
     except Exception as e:
+        if driver:
+            driver.quit()
+            driver=None
         print("failure in chromium function")
         print(e)
         return None
@@ -141,7 +133,11 @@ def edge(headless=True):
             edge_options.add_argument("headless")
         edge_options.add_argument("disable-gpu")
         driver = webdriver.Edge(edgeinstaller,options=edge_options)
+        return driver
     except Exception as e:
+        if driver:
+            driver.quit()
+            driver=None
         print("failure in edge function")
         print(e)
         return None
@@ -157,6 +153,9 @@ def opera(headless=True):
         driver = webdriver.Chrome(executable_path=operainstaller,chrome_options=options)
         return driver
     except Exception as e:
+        if driver:
+            driver.quit()
+            driver=None
         print("failure in chromium function")
         print(e)
         return None
@@ -172,7 +171,11 @@ def firefox(headless=True):
         if headless:
             options.add_argument('--headless')
         driver = webdriver.Firefox(executable_path=firefoxinstaller,firefox_profile=firefox_profile, options=options)
+        return driver
     except Exception as e:
+        if driver:
+            driver.quit()
+            driver=None
         print("failure in firefox function")
         print(e)
         return None
