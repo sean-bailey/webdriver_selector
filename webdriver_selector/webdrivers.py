@@ -100,7 +100,7 @@ while True:
         break
 
 
-def phantomJS(headless=True):
+def phantomJS(headless=True,incognito=True,random_useragent=True):
     try:
         driver=webdriver.PhantomJS()
         return driver
@@ -112,11 +112,13 @@ def phantomJS(headless=True):
         print(e)
         return None
 
-def chrome(headless=True):
+def chrome(headless=True,incognito=True,random_useragent=True):
     try:
         options = webdriver.ChromeOptions()
-        options.add_argument('user-agent=' + str(UserAgent().random) + '')
-        options.add_argument("--incognito")
+        if random_useragent:
+            options.add_argument('user-agent=' + str(UserAgent().random) + '')
+        if incognito:
+            options.add_argument("--incognito")
         options.add_argument("--ignore_certificate_errors")
         if headless:
             options.add_argument("--headless")
@@ -130,11 +132,13 @@ def chrome(headless=True):
         print(e)
         return None
 
-def chromium(headless=True):
+def chromium(headless=True,incognito=True,random_useragent=True):
     try:
         options = webdriver.ChromeOptions()
-        options.add_argument('user-agent=' + str(UserAgent().random) + '')
-        options.add_argument("--incognito")
+        if random_useragent:
+            options.add_argument('user-agent=' + str(UserAgent().random) + '')
+        if incognito:
+            options.add_argument("--incognito")
         options.add_argument("--ignore_certificate_errors")
         if headless:
             options.add_argument("--headless")
@@ -148,7 +152,7 @@ def chromium(headless=True):
         print(e)
         return None
 
-def edge(headless=True):
+def edge(headless=True,incognito=True,random_useragent=True):
     try:
         edge_options = webdriver.EdgeOptions()
         edge_options.use_chromium = True
@@ -165,11 +169,13 @@ def edge(headless=True):
         print(e)
         return None
 
-def opera(headless=True):
+def opera(headless=True,incognito=True,random_useragent=True):
     try:
         options = webdriver.ChromeOptions()
-        options.add_argument('user-agent=' + str(UserAgent().random) + '')
-        options.add_argument("--incognito")
+        if random_useragent:
+            options.add_argument('user-agent=' + str(UserAgent().random) + '')
+        if incognito:
+            options.add_argument("--incognito")
         options.add_argument("--ignore_certificate_errors")
         if headless:
             options.add_argument("--headless")
@@ -183,11 +189,13 @@ def opera(headless=True):
         print(e)
         return None
 
-def firefox(headless=True):
+def firefox(headless=True,incognito=True,random_useragent=True):
     try:
         firefox_profile = webdriver.FirefoxProfile()
-        firefox_profile.set_preference("browser.privatebrowsing.autostart", True)
-        firefox_profile.set_preference("general.useragent.override", UserAgent().random)
+        if incognito:
+            firefox_profile.set_preference("browser.privatebrowsing.autostart", True)
+        if random_useragent:
+            firefox_profile.set_preference("general.useragent.override", UserAgent().random)
         options = webdriver.FirefoxOptions()
         options.set_preference("dom.webnotifications.serviceworker.enabled", False)
         options.set_preference("dom.webnotifications.enabled", False)
@@ -208,7 +216,7 @@ def firefox(headless=True):
 
 
 
-def randomDriver(force=True,headless=True):
+def randomDriver(force=True,headless=True,incognito=True,random_useragent=True):
     functions={"firefox":firefox,"chrome":chrome,"chromium":chromium,"opera":opera,"edge":edge}
     functionlist=availablefunctions
     random.shuffle(functionlist)
@@ -216,7 +224,7 @@ def randomDriver(force=True,headless=True):
     if force:
         while driver is None:
             funchoice=random.choice(functionlist)
-            driver=functions[funchoice](headless)
+            driver=functions[funchoice](headless,incognito,random_useragent)
         return driver
     else:
-        return random.choice(list(functions.keys()))(headless)
+        return random.choice(list(functions.keys()))(headless,incognito,random_useragent)

@@ -19,12 +19,23 @@ the `selector` class can be called with two arguments:
 `force`: if a `randomDriver` is preferred, it will force checking every available driver until it either exhausts all available browsers and returns `None` or returns a viable driver.
 
 Attributes:
+
 `chosendriver` -- the chosen driver 
+
 `force` -- whether or not to force getting a random driver
+
 `driver` -- the selenium webdriver data selected, defaults to `None`
+
 `availablefunctions` -- the list of tuples of available function names and their functions
+
 `finalfunctionstring` -- a human readable string of available functions to choose from
+
 `headless` -- Bool of either `True` or `False` which specifies if you'd like the browser to be headless or not, defaults to `True`
+
+`incognito` -- Bool which specifies if you'd like to run the browser in incognito or private browsing mode, default `True`
+
+`random_useragent` -- Bool which specifies if you'd like to run the browser with a randomized useragent or keep the one for the selected browser, default `True`
+
 
 Examples:
 
