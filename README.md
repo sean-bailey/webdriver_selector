@@ -5,14 +5,9 @@ If you are on a system and just want the first available webdriver preconfigured
 
 **Installation**:
 
-in this directory, run
-`pip install .`
+`pip3 install webdriver-selector`
 
-If you would like to install without downloading the zip, you can very simply do
-
-`pip install https://github.com/sean-bailey/webdriver_selector/archive/main.zip`
-
-**Useage**
+**Usage**
 
 the `selector` class can be called with two arguments:
 `chosendriver`: the preferred webdriver, default to `randomDriver`
@@ -54,3 +49,9 @@ import webdriver_selector
 driver=webdriver_selector.selector(chosendriver="chrome").driver
 
 ```
+
+Once you have a driver, it is simply now the selenium webdriver, with
+useage and documentation found here:
+
+https://selenium-python.readthedocs.io/
+
