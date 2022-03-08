@@ -7,6 +7,7 @@ from fake_useragent import UserAgent
 from webdriver_manager.utils import ChromeType
 import random
 import warnings
+import sys
 warnings.filterwarnings('ignore')
 import os
 import time
@@ -25,46 +26,70 @@ while True:
 
         chromeinstaller=ChromeDriverManager().install()
         availablefunctions.append("chrome")
-        print("chromeinstaller installed")
+        
+        sys.stdout.write('\x1b[1K\r')
+        sys.stdout.write("chromeinstaller installed")
         break
     except Exception as e:
-        checkvalue=str(e)
+        checkvalue=str(str(e))
         if "API rate limit exceeded" in checkvalue:
-            print("You've exceeded the Github API Rate limit for running the installers for webdrivers. Please try again in an hour.")
-
+            
+            sys.stdout.write('\x1b[1K\r')
+            sys.stdout.write("You've exceeded the Github API Rate limit for running the installers for webdrivers. Please try again in an hour.")
         else:
-            print("Cannot install chromedriver")
-            print(e)
+            sys.stdout.write("Cannot install chromedriver")
+            
+            sys.stdout.write('\x1b[1K\r')
+            sys.stdout.write(str(e))
+            
+            sys.stdout.write('\x1b[1K\r')
+
         break
 
 while True:
     try:
         chromiuminstaller=ChromeDriverManager(chrome_type=ChromeType.CHROMIUM).install()
         availablefunctions.append("chromium")
-        print("chromiuminstaller installed")
+        
+        sys.stdout.write('\x1b[1K\r')
+        sys.stdout.write("chromiuminstaller installed")
         break
     except Exception as e:
-        checkvalue=str(e)
+        checkvalue=str(str(e))
         if "API rate limit exceeded" in checkvalue:
-            print("You've exceeded the Github API Rate limit for running the installers for webdrivers. Please try again in an hour.")
+            
+            sys.stdout.write('\x1b[1K\r')
+            sys.stdout.write("You've exceeded the Github API Rate limit for running the installers for webdrivers. Please try again in an hour.")
         else:
-            print("Cannot install chromium-driver")
-            print(e)
+            
+            sys.stdout.write('\x1b[1K\r')
+            sys.stdout.write("Cannot install chromium-driver")
+            sys.stdout.write(str(e))
+            
+            sys.stdout.write('\x1b[1K\r')
         break
 
 while True:
     try:
         edgeinstaller=EdgeChromiumDriverManager().install()
         availablefunctions.append("edge")
-        print("edgeinstaller installed")
+        
+        sys.stdout.write('\x1b[1K\r')
+        sys.stdout.write("edgeinstaller installed")
         break
     except Exception as e:
-        checkvalue=str(e)
+        checkvalue=str(str(e))
         if "API rate limit exceeded" in checkvalue:
-            print("You've exceeded the Github API Rate limit for running the installers for webdrivers. Please try again in an hour.")
+            
+            sys.stdout.write('\x1b[1K\r')
+            sys.stdout.write("You've exceeded the Github API Rate limit for running the installers for webdrivers. Please try again in an hour.")
         else:
-            print("Cannot install edgedriver")
-            print(e)
+            
+            sys.stdout.write('\x1b[1K\r')
+            sys.stdout.write("Cannot install edgedriver")
+            sys.stdout.write(str(e))
+            
+            sys.stdout.write('\x1b[1K\r')
         break
 """
 #I am experiencing some issues with opera on ubuntu 20...
@@ -72,31 +97,41 @@ while True:
     try:
         operainstaller=OperaDriverManager().install()
         availablefunctions.append('opera')
-        print("operainstaller installed")
+        sys.stdout.write("operainstaller installed")
         break
     except Exception as e:
-        checkvalue=str(e)
+        checkvalue=str(str(e))
         if "API rate limit exceeded" in checkvalue:
 
-            print("You've exceeded the Github API Rate limit for running the installers for webdrivers. Please try again in an hour.")
+            sys.stdout.write("You've exceeded the Github API Rate limit for running the installers for webdrivers. Please try again in an hour.")
         else:
-            print("Cannot install operadriver")
-            print(e)
+            sys.stdout.write("Cannot install operadriver")
+            sys.stdout.write(str(e))
+
+sys.stdout.write('\x1b[1K\r')
         break
 """
 while True:
     try:
         firefoxinstaller=GeckoDriverManager().install()
         availablefunctions.append("firefox")
-        print("firefoxinstaller installed")
+        
+        sys.stdout.write('\x1b[1K\r')
+        sys.stdout.write("firefoxinstaller installed")
         break
     except Exception as e:
-        checkvalue=str(e)
+        checkvalue=str(str(e))
         if "API rate limit exceeded" in checkvalue:
-            print("You've exceeded the Github API Rate limit for running the installers for webdrivers. Please try again in an hour.")
+            
+            sys.stdout.write('\x1b[1K\r')
+            sys.stdout.write("You've exceeded the Github API Rate limit for running the installers for webdrivers. Please try again in an hour.")
         else:
-            print("Cannot install firefoxdriver")
-            print(e)
+            
+            sys.stdout.write('\x1b[1K\r')
+            sys.stdout.write("Cannot install firefoxdriver")
+
+            sys.stdout.write(str(e))
+
         break
 
 
@@ -109,8 +144,12 @@ def phantomJS(headless=True,incognito=True,random_useragent=True):
         if driver is not None:
             driver.quit()
             driver=None
-        print("failure in phantomJS function")
-        print(e)
+        
+        sys.stdout.write('\x1b[1K\r')
+        sys.stdout.write("failure in phantomJS function")
+        sys.stdout.write(str(e))
+        
+        sys.stdout.write('\x1b[1K\r')
     return driver
 
 def chrome(headless=True,incognito=True,random_useragent=True):
@@ -129,8 +168,12 @@ def chrome(headless=True,incognito=True,random_useragent=True):
         if driver is not None:
             driver.quit()
             driver=None
-        print("failure in chrome function")
-        print(e)
+        
+        sys.stdout.write('\x1b[1K\r')
+        sys.stdout.write("failure in chrome function")
+        sys.stdout.write(str(e))
+        
+        sys.stdout.write('\x1b[1K\r')
     return driver
 
 def chromium(headless=True,incognito=True,random_useragent=True):
@@ -150,8 +193,12 @@ def chromium(headless=True,incognito=True,random_useragent=True):
         if driver is not None:
             driver.quit()
             driver=None
-        print("failure in chromium function")
-        print(e)
+        
+        sys.stdout.write('\x1b[1K\r')
+        sys.stdout.write("failure in chromium function")
+        sys.stdout.write(str(e))
+        
+        sys.stdout.write('\x1b[1K\r')
     return driver
 
 def edge(headless=True,incognito=True,random_useragent=True):
@@ -167,8 +214,12 @@ def edge(headless=True,incognito=True,random_useragent=True):
         if driver is not None:
             driver.quit()
             driver=None
-        print("failure in edge function")
-        print(e)
+        
+        sys.stdout.write('\x1b[1K\r')
+        sys.stdout.write("failure in edge function")
+        sys.stdout.write(str(e))
+        
+        sys.stdout.write('\x1b[1K\r')
     return driver
 
 def opera(headless=True,incognito=True,random_useragent=True):
@@ -187,8 +238,12 @@ def opera(headless=True,incognito=True,random_useragent=True):
         if driver is not None:
             driver.quit()
             driver=None
-        print("failure in opera function")
-        print(e)
+        
+        sys.stdout.write('\x1b[1K\r')
+        sys.stdout.write("failure in opera function")
+        sys.stdout.write(str(e))
+        
+        sys.stdout.write('\x1b[1K\r')
     return driver
 
 def firefox(headless=True,incognito=True,random_useragent=True):
@@ -210,8 +265,12 @@ def firefox(headless=True,incognito=True,random_useragent=True):
         if driver is not None:
             driver.quit()
             driver=None
-        print("failure in firefox function")
-        print(e)
+        
+        sys.stdout.write('\x1b[1K\r')
+        sys.stdout.write("failure in firefox function")
+        sys.stdout.write(str(e))
+        
+        sys.stdout.write('\x1b[1K\r')
     return driver
 
 
