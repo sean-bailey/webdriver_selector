@@ -101,18 +101,20 @@ while True:
 
 
 def phantomJS(headless=True,incognito=True,random_useragent=True):
+    driver=None
     try:
         driver=webdriver.PhantomJS()
-        return driver
+
     except Exception as e:
-        if driver:
+        if driver is not None:
             driver.quit()
             driver=None
         print("failure in phantomJS function")
         print(e)
-        return None
+    return driver
 
 def chrome(headless=True,incognito=True,random_useragent=True):
+    driver=None
     try:
         options = webdriver.ChromeOptions()
         if random_useragent:
@@ -123,16 +125,16 @@ def chrome(headless=True,incognito=True,random_useragent=True):
         if headless:
             options.add_argument("--headless")
         driver = webdriver.Chrome(chromeinstaller,chrome_options=options)
-        return driver
     except Exception as e:
-        if driver:
+        if driver is not None:
             driver.quit()
             driver=None
         print("failure in chrome function")
         print(e)
-        return None
+    return driver
 
 def chromium(headless=True,incognito=True,random_useragent=True):
+    driver = None
     try:
         options = webdriver.ChromeOptions()
         if random_useragent:
@@ -143,16 +145,17 @@ def chromium(headless=True,incognito=True,random_useragent=True):
         if headless:
             options.add_argument("--headless")
         driver = webdriver.Chrome(chromiuminstaller,chrome_options=options)
-        return driver
+
     except Exception as e:
-        if driver:
+        if driver is not None:
             driver.quit()
             driver=None
         print("failure in chromium function")
         print(e)
-        return None
+    return driver
 
 def edge(headless=True,incognito=True,random_useragent=True):
+    driver = None
     try:
         edge_options = webdriver.EdgeOptions()
         edge_options.use_chromium = True
@@ -160,16 +163,16 @@ def edge(headless=True,incognito=True,random_useragent=True):
             edge_options.add_argument("headless")
         edge_options.add_argument("disable-gpu")
         driver = webdriver.Edge(edgeinstaller,options=edge_options)
-        return driver
     except Exception as e:
-        if driver:
+        if driver is not None:
             driver.quit()
             driver=None
         print("failure in edge function")
         print(e)
-        return None
+    return driver
 
 def opera(headless=True,incognito=True,random_useragent=True):
+    driver=None
     try:
         options = webdriver.ChromeOptions()
         if random_useragent:
@@ -180,16 +183,16 @@ def opera(headless=True,incognito=True,random_useragent=True):
         if headless:
             options.add_argument("--headless")
         driver = webdriver.Chrome(executable_path=operainstaller,chrome_options=options)
-        return driver
     except Exception as e:
-        if driver:
+        if driver is not None:
             driver.quit()
             driver=None
         print("failure in opera function")
         print(e)
-        return None
+    return driver
 
 def firefox(headless=True,incognito=True,random_useragent=True):
+    driver=None
     try:
         firefox_profile = webdriver.FirefoxProfile()
         if incognito:
@@ -202,14 +205,14 @@ def firefox(headless=True,incognito=True,random_useragent=True):
         if headless:
             options.add_argument('--headless')
         driver = webdriver.Firefox(executable_path=firefoxinstaller,firefox_profile=firefox_profile, options=options)
-        return driver
+
     except Exception as e:
-        if driver:
+        if driver is not None:
             driver.quit()
             driver=None
         print("failure in firefox function")
         print(e)
-        return None
+    return driver
 
 
 
