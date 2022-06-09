@@ -3,7 +3,7 @@ from webdriver_manager.chrome import ChromeDriverManager
 from webdriver_manager.firefox import GeckoDriverManager
 from webdriver_manager.microsoft import EdgeChromiumDriverManager
 from webdriver_manager.opera import OperaDriverManager
-from fake_useragent import UserAgent
+from user_agent import generate_user_agent, generate_navigator
 from webdriver_manager.utils import ChromeType
 import random
 import warnings
@@ -157,7 +157,7 @@ def chrome(headless=True,incognito=True,random_useragent=True):
     try:
         options = webdriver.ChromeOptions()
         if random_useragent:
-            options.add_argument('user-agent=' + str(UserAgent().random) + '')
+            options.add_argument('user-agent=' + str(generate_user_agent()) + '')
         if incognito:
             options.add_argument("--incognito")
         options.add_argument("--ignore_certificate_errors")
@@ -181,7 +181,7 @@ def chromium(headless=True,incognito=True,random_useragent=True):
     try:
         options = webdriver.ChromeOptions()
         if random_useragent:
-            options.add_argument('user-agent=' + str(UserAgent().random) + '')
+            options.add_argument('user-agent=' + str(generate_user_agent()) + '')
         if incognito:
             options.add_argument("--incognito")
         options.add_argument("--ignore_certificate_errors")
@@ -227,7 +227,7 @@ def opera(headless=True,incognito=True,random_useragent=True):
     try:
         options = webdriver.ChromeOptions()
         if random_useragent:
-            options.add_argument('user-agent=' + str(UserAgent().random) + '')
+            options.add_argument('user-agent=' + str(generate_user_agent()) + '')
         if incognito:
             options.add_argument("--incognito")
         options.add_argument("--ignore_certificate_errors")
@@ -253,7 +253,7 @@ def firefox(headless=True,incognito=True,random_useragent=True):
         if incognito:
             firefox_profile.set_preference("browser.privatebrowsing.autostart", True)
         if random_useragent:
-            firefox_profile.set_preference("general.useragent.override", UserAgent().random)
+            firefox_profile.set_preference("general.useragent.override", str(generate_user_agent()))
         options = webdriver.FirefoxOptions()
         options.set_preference("dom.webnotifications.serviceworker.enabled", False)
         options.set_preference("dom.webnotifications.enabled", False)
