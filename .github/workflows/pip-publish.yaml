@@ -2,8 +2,9 @@ name: pypi package deployment
 
 on:
   push:
-    #paths:
-    #  - webdriver_selector/**
+    paths:
+      - ./**
+      - webdriver_selector/**
     branches: [main]
 
 jobs:
