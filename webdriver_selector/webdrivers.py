@@ -5,6 +5,7 @@ from webdriver_manager.microsoft import EdgeChromiumDriverManager
 from webdriver_manager.opera import OperaDriverManager
 from user_agent import generate_user_agent, generate_navigator
 from webdriver_manager.utils import ChromeType
+from selenium.webdriver.common.proxy import Proxy, ProxyType
 import random
 import warnings
 import sys
@@ -152,7 +153,7 @@ def phantomJS(headless=True,incognito=True,random_useragent=True):
         sys.stdout.write('\x1b[1K\r')
     return driver
 
-def chrome(headless=True,incognito=True,random_useragent=True):
+def chrome(headless=True,incognito=True,random_useragent=True,proxy_ip=None,proxy_port=None):
     driver=None
     try:
         options = webdriver.ChromeOptions()
@@ -163,7 +164,25 @@ def chrome(headless=True,incognito=True,random_useragent=True):
         options.add_argument("--ignore_certificate_errors")
         if headless:
             options.add_argument("--headless")
-        driver = webdriver.Chrome(chromeinstaller,chrome_options=options)
+        if proxy_ip is not None:
+            if proxy_port is not None:
+                PROXY=proxy_ip+":"+proxy_port
+
+                prox = Proxy()
+                prox.proxy_type = ProxyType.MANUAL
+                prox.http_proxy = PROXY
+                #prox.socks_proxy = PROXY
+                prox.ssl_proxy = PROXY
+
+                capabilities = webdriver.DesiredCapabilities.CHROME
+                prox.add_to_capabilities(capabilities)
+                driver = webdriver.Chrome(chromeinstaller, chrome_options=options,desired_capabilities=capabilities)
+        #        options.add_argument('--proxy-server=%s' % PROXY)
+            else:
+                raise ValueError("You must include which port to use for your proxy.")
+        else:
+            driver = webdriver.Chrome(chromeinstaller, chrome_options=options)
+
     except Exception as e:
         if driver is not None:
             driver.quit()
@@ -176,8 +195,9 @@ def chrome(headless=True,incognito=True,random_useragent=True):
         sys.stdout.write('\x1b[1K\r')
     return driver
 
-def chromium(headless=True,incognito=True,random_useragent=True):
+def chromium(headless=True,incognito=True,random_useragent=True,proxy_ip=None,proxy_port=None):
     driver = None
+    proxy=None
     try:
         options = webdriver.ChromeOptions()
         if random_useragent:
@@ -187,7 +207,24 @@ def chromium(headless=True,incognito=True,random_useragent=True):
         options.add_argument("--ignore_certificate_errors")
         if headless:
             options.add_argument("--headless")
-        driver = webdriver.Chrome(chromiuminstaller,chrome_options=options)
+        if proxy_ip is not None:
+            if proxy_port is not None:
+                PROXY = proxy_ip + ":" + proxy_port
+
+                prox = Proxy()
+                prox.proxy_type = ProxyType.MANUAL
+                prox.http_proxy = PROXY
+                #prox.socks_proxy = PROXY
+                prox.ssl_proxy = PROXY
+
+                capabilities = webdriver.DesiredCapabilities.CHROME
+                prox.add_to_capabilities(capabilities)
+                driver = webdriver.Chrome(chromiuminstaller, chrome_options=options, desired_capabilities=capabilities)
+            #        options.add_argument('--proxy-server=%s' % PROXY)
+            else:
+                raise ValueError("You must include which port to use for your proxy.")
+        else:
+            driver = webdriver.Chrome(chromiuminstaller, chrome_options=options)
 
     except Exception as e:
         if driver is not None:
@@ -201,15 +238,36 @@ def chromium(headless=True,incognito=True,random_useragent=True):
         sys.stdout.write('\x1b[1K\r')
     return driver
 
-def edge(headless=True,incognito=True,random_useragent=True):
+def edge(headless=True,incognito=True,random_useragent=True,proxy_ip=None,proxy_port=None):
     driver = None
     try:
         edge_options = webdriver.EdgeOptions()
         edge_options.use_chromium = True
         if headless:
             edge_options.add_argument("headless")
-        edge_options.add_argument("disable-gpu")
-        driver = webdriver.Edge(edgeinstaller,options=edge_options)
+
+        if proxy_ip is not None:
+            if proxy_port is not None:
+                PROXY=proxy_ip+":"+proxy_port
+
+                prox = Proxy()
+                prox.proxy_type = ProxyType.MANUAL
+                prox.http_proxy = PROXY
+                #prox.socks_proxy = PROXY
+                prox.ssl_proxy = PROXY
+
+                capabilities = webdriver.DesiredCapabilities.EDGE
+                prox.add_to_capabilities(capabilities)
+                driver = webdriver.Edge(edgeinstaller, options=edge_options,desired_capabilities=capabilities)
+        #        options.add_argument('--proxy-server=%s' % PROXY)
+            else:
+                raise ValueError("You must include which port to use for your proxy.")
+        else:
+            driver = webdriver.Edge(edgeinstaller, options=edge_options)
+
+
+
+
     except Exception as e:
         if driver is not None:
             driver.quit()
@@ -222,8 +280,9 @@ def edge(headless=True,incognito=True,random_useragent=True):
         sys.stdout.write('\x1b[1K\r')
     return driver
 
-def opera(headless=True,incognito=True,random_useragent=True):
+def opera(headless=True,incognito=True,random_useragent=True,proxy_ip=None,proxy_port=None):
     driver=None
+    proxy = None
     try:
         options = webdriver.ChromeOptions()
         if random_useragent:
@@ -233,7 +292,26 @@ def opera(headless=True,incognito=True,random_useragent=True):
         options.add_argument("--ignore_certificate_errors")
         if headless:
             options.add_argument("--headless")
-        driver = webdriver.Chrome(executable_path=operainstaller,chrome_options=options)
+
+        if proxy_ip is not None:
+            if proxy_port is not None:
+                PROXY=proxy_ip+":"+proxy_port
+
+                prox = Proxy()
+                prox.proxy_type = ProxyType.MANUAL
+                prox.http_proxy = PROXY
+                #prox.socks_proxy = PROXY
+                prox.ssl_proxy = PROXY
+
+                capabilities = webdriver.DesiredCapabilities.CHROME
+                prox.add_to_capabilities(capabilities)
+                driver = webdriver.Chrome(operainstaller, chrome_options=options,desired_capabilities=capabilities)
+        #        options.add_argument('--proxy-server=%s' % PROXY)
+            else:
+                raise ValueError("You must include which port to use for your proxy.")
+        else:
+            driver = webdriver.Chrome(operainstaller, chrome_options=options)
+
     except Exception as e:
         if driver is not None:
             driver.quit()
@@ -246,20 +324,43 @@ def opera(headless=True,incognito=True,random_useragent=True):
         sys.stdout.write('\x1b[1K\r')
     return driver
 
-def firefox(headless=True,incognito=True,random_useragent=True):
+def firefox(headless=True,incognito=True,random_useragent=True,proxy_ip=None,proxy_port=None,protocol=None):
     driver=None
+    proxy=None
     try:
         firefox_profile = webdriver.FirefoxProfile()
         if incognito:
             firefox_profile.set_preference("browser.privatebrowsing.autostart", True)
         if random_useragent:
             firefox_profile.set_preference("general.useragent.override", str(generate_user_agent()))
+
         options = webdriver.FirefoxOptions()
         options.set_preference("dom.webnotifications.serviceworker.enabled", False)
         options.set_preference("dom.webnotifications.enabled", False)
+
         if headless:
             options.add_argument('--headless')
-        driver = webdriver.Firefox(executable_path=firefoxinstaller,firefox_profile=firefox_profile, options=options)
+
+        if proxy_ip is not None:
+            if proxy_port is not None:
+                PROXY=proxy_ip+":"+proxy_port
+
+                prox = Proxy()
+                prox.proxy_type = ProxyType.MANUAL
+                prox.http_proxy = PROXY
+                #prox.socks_proxy = PROXY
+                prox.ssl_proxy = PROXY
+
+                capabilities = webdriver.DesiredCapabilities.FIREFOX
+                prox.add_to_capabilities(capabilities)
+                driver = webdriver.Firefox(executable_path=firefoxinstaller, firefox_profile=firefox_profile,
+                                       options=options,desired_capabilities=capabilities)
+        #        options.add_argument('--proxy-server=%s' % PROXY)
+            else:
+                raise ValueError("You must include which port to use for your proxy.")
+        else:
+            driver = webdriver.Firefox(executable_path=firefoxinstaller, firefox_profile=firefox_profile,
+                                       options=options)
 
     except Exception as e:
         if driver is not None:
@@ -278,7 +379,7 @@ def firefox(headless=True,incognito=True,random_useragent=True):
 
 
 
-def randomDriver(force=True,headless=True,incognito=True,random_useragent=True):
+def randomDriver(force=True,headless=True,incognito=True,random_useragent=True,proxy_ip=None,proxy_port=None):
     functions={"firefox":firefox,"chrome":chrome,"chromium":chromium,"opera":opera,"edge":edge}
     functionlist=availablefunctions
     random.shuffle(functionlist)
@@ -286,7 +387,7 @@ def randomDriver(force=True,headless=True,incognito=True,random_useragent=True):
     if force:
         while driver is None:
             funchoice=random.choice(functionlist)
-            driver=functions[funchoice](headless,incognito,random_useragent)
+            driver=functions[funchoice](headless,incognito,random_useragent,proxy_ip,proxy_port)
         return driver
     else:
-        return random.choice(list(functions.keys()))(headless,incognito,random_useragent)
+        return random.choice(list(functions.keys()))(headless,incognito,random_useragent,proxy_ip,proxy_port)

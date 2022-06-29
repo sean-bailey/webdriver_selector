@@ -20,7 +20,7 @@ print(find_packages())
 
 setup(
     name='webdriver-selector',
-    version='1.1.0',
+    version='1.1.1',
     packages=find_packages(),
     author="Sean Bailey",
     author_email="seanbailey518@gmail.com",

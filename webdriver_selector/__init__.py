@@ -11,20 +11,22 @@ def functions():
 
 class selector:
 
-    def __init__(self,chosendriver="randomDriver",force=True,headless=True,incognito=True,random_useragent=True):
+    def __init__(self,chosendriver="randomDriver",force=True,headless=True,incognito=True,random_useragent=True,proxy_ip=None,proxy_port=None):
         self.chosendriver=chosendriver
         self.force=force
         self.headless=headless
         self.incognito=incognito
         self.random_useragent=random_useragent
+        self.proxy_ip=proxy_ip
+        self.proxy_port=proxy_port
         availablefunctions=functions()
         driver=None
         for function in availablefunctions:
             if self.chosendriver == function[0]:
                 if self.chosendriver=="randomDriver":
-                    driver=function[1](self.force,self.headless,self.incognito,self.random_useragent)
+                    driver=function[1](self.force,self.headless,self.incognito,self.random_useragent,self.proxy_ip,self.proxy_port)
                 else:
-                    driver=function[1](self.headless,self.incognito,self.random_useragent)
+                    driver=function[1](self.headless,self.incognito,self.random_useragent,self.proxy_ip,self.proxy_port)
         self.availablefunctions=availablefunctions
         self.driver=driver
         self.finalfunctionstring=""

@@ -31,7 +31,12 @@ Attributes:
 
 `random_useragent` -- Bool which specifies if you'd like to run the browser with a randomized useragent or keep the one for the selected browser, default `True`
 
+***EXPERIMENTAL***
+`proxy_ip` -- string of the ip address which you would want your browser to work through
 
+`proxy_port` -- string of the port of the proxy you'd like to use. ***REQUIRED IF PROXY_IP IS SPECIFIED***
+
+***Note this currently supports only HTTPS, unauthenticated proxies, and only seems to consistently work with Chrome based browsers.***
 Examples:
 
 ```
