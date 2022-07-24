@@ -122,6 +122,7 @@ while True:
         break
     except Exception as e:
         checkvalue=str(str(e))
+
         if "API rate limit exceeded" in checkvalue:
             
             sys.stdout.write('\x1b[1K\r')
@@ -157,6 +158,9 @@ def chrome(headless=True,incognito=True,random_useragent=True,proxy_ip=None,prox
     driver=None
     try:
         options = webdriver.ChromeOptions()
+        options.add_experimental_option("useAutomationExtension",
+                                        False)  # Adding Argument to Not Use Automation Extension
+        options.add_experimental_option("excludeSwitches", ["enable-automation"])  # Excluding enable-automation Switch
         if random_useragent:
             options.add_argument('user-agent=' + str(generate_user_agent()) + '')
         if incognito:
@@ -200,6 +204,9 @@ def chromium(headless=True,incognito=True,random_useragent=True,proxy_ip=None,pr
     proxy=None
     try:
         options = webdriver.ChromeOptions()
+        options.add_experimental_option("useAutomationExtension",
+                                        False)  # Adding Argument to Not Use Automation Extension
+        options.add_experimental_option("excludeSwitches", ["enable-automation"])  # Excluding enable-automation Switch
         if random_useragent:
             options.add_argument('user-agent=' + str(generate_user_agent()) + '')
         if incognito:
@@ -378,16 +385,33 @@ def firefox(headless=True,incognito=True,random_useragent=True,proxy_ip=None,pro
 
 
 
-
 def randomDriver(force=True,headless=True,incognito=True,random_useragent=True,proxy_ip=None,proxy_port=None):
     functions={"firefox":firefox,"chrome":chrome,"chromium":chromium,"opera":opera,"edge":edge}
-    functionlist=availablefunctions
+    #It appears, at this moment, that when assigning this list to the values of availalefunctions, _it is also working in reverse_
+    #as in, popping a value from functionlist IS ALSO POPPING IT FROM availablefunctions. lets try... global?
+    #functionlist=availablefunctions
+    #global availablefunctions
+    #functionlist= availablefunctions
+    #nope! what on earth is going on here? Try for loop
+    functionlist=[]
+    for item in availablefunctions:
+        functionlist.append(item)
+        #these should be completely separate references in memory!
+        #This worked. TODO: research _why_ this happened. From my understanding, functionlist should be a new variable of duplicate values set to whatever other variable it is equal to. This makes as much sense as having y=15, x=y, x=x-1, and then also having y be equally affected.
     random.shuffle(functionlist)
     driver=None
     if force:
         while driver is None:
-            funchoice=random.choice(functionlist)
-            driver=functions[funchoice](headless,incognito,random_useragent,proxy_ip,proxy_port)
+            try:
+                funchoice=functionlist.pop()
+                driver=functions[funchoice](headless,incognito,random_useragent,proxy_ip,proxy_port)
+            except Exception:
+                sys.stdout.write('\x1b[1K\r')
+                sys.stdout.write("Ran out of functions to choose from!")
+                sys.stdout.write(str(e))
+
+                sys.stdout.write('\x1b[1K\r')
+                break
         return driver
     else:
         return random.choice(list(functions.keys()))(headless,incognito,random_useragent,proxy_ip,proxy_port)
